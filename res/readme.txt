@@ -1,0 +1,1 @@
+Resources as class assets
