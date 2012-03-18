@@ -15,6 +15,10 @@ public class Screen {
 		this.height = height;
 		pixels = new int[width * height];
 	}
+	
+	public void render(Sprite sprite, int x, int y) {
+		
+	}
 
 	public void test(GameComponent game) {
 
