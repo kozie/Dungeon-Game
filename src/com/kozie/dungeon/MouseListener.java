@@ -42,6 +42,11 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 				break;
 		}
 	}
+	
+	public void release() {
+		left = false;
+		right = false;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

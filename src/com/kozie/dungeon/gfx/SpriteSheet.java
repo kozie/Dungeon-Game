@@ -37,14 +37,14 @@ public class SpriteSheet {
 		
 		int[] sprite = new int[(xTiles * tileSize) * (yTiles * tileSize)];
 		
-		int offsetX = (tileOffset % (width * tileSize)) * tileSize;
-		int offsetY = (tileOffset / width * tileSize) * tileSize * width;
+		int offsetX = (tileOffset % (width / tileSize)) * tileSize;
+		int offsetY = (tileOffset / (width / tileSize)) * width * tileSize;
 		int offset = offsetX + offsetY;
 		
 		for (int y = 0; y < yTiles * tileSize; y++) {
-			for (int x = 0; x < yTiles * tileSize; x++) {
+			for (int x = 0; x < xTiles * tileSize; x++) {
 				
-				sprite[y * tileSize + x] = pixels[offset + y * width + x];
+				sprite[y * (xTiles * tileSize) + x] = pixels[offset + y * width + x];
 			}
 		}
 		

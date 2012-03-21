@@ -34,5 +34,16 @@ public class Font {
 
 	public void draw(String text, int x, int y, int colors) {
 
+		// Draw text on screen at requested position
+		for (int i = 0; i < text.length(); i++) {
+			
+			String c = Character.toString(text.charAt(i));
+			
+			// Skip non existing characters and spaces
+			if (c == " " || chars.get(c) == null) continue;
+			
+			Sprite sprite = chars.get(c);
+			screen.render(sprite, x + i * sprite.width, y, colors);
+		}
 	}
 }

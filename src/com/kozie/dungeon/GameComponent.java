@@ -1,22 +1,21 @@
 package com.kozie.dungeon;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.kozie.dungeon.gfx.Colors;
+import com.kozie.dungeon.gfx.Font;
 import com.kozie.dungeon.gfx.Screen;
+import com.kozie.dungeon.gfx.SpriteSheet;
 
 public class GameComponent extends Canvas implements Runnable {
 
@@ -34,7 +33,10 @@ public class GameComponent extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	public int[] colors = new int[6 * 6 * 6];
+	
 	public Screen screen;
+	public SpriteSheet spritesheet;
+	public Font font;
 
 	public KeyboardListener keyListener;
 	public MouseListener mouseListener;
@@ -60,8 +62,12 @@ public class GameComponent extends Canvas implements Runnable {
 			}
 		}
 
-		screen = new Screen(WIDTH, HEIGHT);
-
+		// Initialize new screen for managing screen pixels and
+		// a main spritesheet manager
+		screen = new Screen(WIDTH, HEIGHT, this);
+		spritesheet = new SpriteSheet(GameComponent.class.getResourceAsStream("/main.png"), 16);
+		font = new Font(spritesheet, screen);
+		
 		requestFocus();
 	}
 
@@ -103,6 +109,7 @@ public class GameComponent extends Canvas implements Runnable {
 			// Pause the game if not focussed
 			if (!hasFocus()) {
 				keyListener.release();
+				mouseListener.release();
 
 				lastRun = System.nanoTime();
 				lastTimer = System.currentTimeMillis();
@@ -191,10 +198,14 @@ public class GameComponent extends Canvas implements Runnable {
 
 		// Temp for benchmark
 		screen.test(this);
+		font.draw("a bb abc ddd", 30, 30, Colors.get(-1, 0, 0, 555));
+		
+		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
 
+		// Draw the graphics to end-user
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
@@ -213,7 +224,6 @@ public class GameComponent extends Canvas implements Runnable {
 		} else {
 			g.drawString("None pressed", 10, 40);
 		}
-
 	}
 
 	public GameComponent() {
@@ -221,7 +231,7 @@ public class GameComponent extends Canvas implements Runnable {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+		setFont(new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 14));
 
 		keyListener = new KeyboardListener(this);
 		mouseListener = new MouseListener(this);
