@@ -24,7 +24,7 @@ public class Screen {
 		
 		for (int yy = 0; yy < sprite.height; yy++) {
 			for (int xx = 0; xx < sprite.width; xx++) {
-				//System.out.println(colors >> 24);
+				
 				int col = (colors >> (sprite.pixels[yy * sprite.width + xx] * 8)) & 0xFF;
 				if (col < 255) {
 					

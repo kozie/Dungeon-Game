@@ -4,7 +4,6 @@ public class Font {
 
 	private SpriteCollection chars;
 	private Screen screen;
-	private SpriteSheet sheet;
 
 	private String[] charTable = {
 			"abcdefghijklmnopqrstuvwxyz",
@@ -14,8 +13,6 @@ public class Font {
 	public Font(SpriteSheet sheet, Screen screen) {
 		
 		chars = new SpriteCollection();
-		
-		this.sheet = sheet;
 		this.screen = screen;
 		
 		// Set starting offset of font collection in the sprite.

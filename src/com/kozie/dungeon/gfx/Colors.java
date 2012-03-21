@@ -1,10 +1,6 @@
 package com.kozie.dungeon.gfx;
 
-import java.util.Random;
-
 public class Colors {
-	
-	public static Random r = new Random();
 	
 	public static int get(int a, int b, int c, int d) {
 		
