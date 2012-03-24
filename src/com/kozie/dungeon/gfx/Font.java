@@ -1,5 +1,7 @@
 package com.kozie.dungeon.gfx;
 
+import java.awt.Dimension;
+
 public class Font {
 
 	private SpriteCollection chars;
@@ -24,7 +26,9 @@ public class Font {
 		for (int y = 0; y < charTable.length; y++) {
 			for (int x = 0; x < charTable[y].length(); x++) {
 				
-				chars.set(Character.toString(charTable[y].charAt(x)), new Sprite(sheet, offset + y * xTiles + x));
+				Sprite sprite = new Sprite(sheet, offset + y * xTiles + x);
+				
+				chars.set(Character.toString(charTable[y].charAt(x)), sprite);
 			}
 		}
 	}
@@ -40,7 +44,7 @@ public class Font {
 			if (c == " " || chars.get(c) == null) continue;
 			
 			Sprite sprite = chars.get(c);
-			screen.render(sprite, x + i * sprite.width, y, colors);
+			screen.render(sprite, x + i * sprite.width / 2, y, colors);
 		}
 	}
 }

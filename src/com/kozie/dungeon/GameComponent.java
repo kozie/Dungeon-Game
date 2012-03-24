@@ -111,11 +111,11 @@ public class GameComponent extends Canvas implements Runnable {
 				keyListener.release();
 				mouseListener.release();
 
-				lastRun = System.nanoTime();
+				/*lastRun = System.nanoTime();
 				lastTimer = System.currentTimeMillis();
 				lastTickTime = lastTimer;
 
-				continue;
+				continue;*/
 			}
 
 			// Set ticks that are unprocessed
@@ -198,7 +198,7 @@ public class GameComponent extends Canvas implements Runnable {
 
 		// Temp for benchmark
 		screen.test(this);
-		font.draw("a bb abc ddd", 30, 30, Colors.get(-1, 0, 0, 555));
+		font.draw("hello my name is koos", 30, 30, Colors.get(-1, 0, 0, 555));
 		
 		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {
