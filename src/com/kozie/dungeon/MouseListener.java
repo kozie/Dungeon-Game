@@ -20,16 +20,16 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
 		isDrag = false;
 		
-		mouseX = e.getX();
-		mouseY = e.getY();
+		mouseX = e.getX() / GameComponent.SCALE;
+		mouseY = e.getY() / GameComponent.SCALE;
 	}
 	
 	public void mouseDragged(MouseEvent e) {
 		
 		isDrag = true;
 		
-		mouseX = e.getX();
-		mouseY = e.getY();
+		mouseX = e.getX() / GameComponent.SCALE;
+		mouseY = e.getY() / GameComponent.SCALE;
 	}
 
 	public void mousePressed(MouseEvent e) {

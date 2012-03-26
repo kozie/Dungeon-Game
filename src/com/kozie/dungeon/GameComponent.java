@@ -222,7 +222,7 @@ public class GameComponent extends Canvas implements Runnable {
 		
 		// Render some info / Statistics
 		int col = Colors.get(-1, -1, 111, 555);
-		font.draw("fps " + fps, 2, 2, col);
+		font.draw(fps + " fps", 2, 2, col);
 		font.draw("x: " + mouseListener.mouseX + ", y: " + mouseListener.mouseY, 2, 10, col);
 		if (mouseListener.left && mouseListener.right) {
 			font.draw("left and right pressed", 2, 18, col);
@@ -236,7 +236,7 @@ public class GameComponent extends Canvas implements Runnable {
 		
 		// Render the custom cursor
 		int cursorCol = (mouseListener.isDrag) ? cursorDragColors : cursorColors;
-		screen.render(cursor, mouseListener.mouseX / SCALE, mouseListener.mouseY / SCALE, cursorCol);
+		screen.render(cursor, mouseListener.mouseX, mouseListener.mouseY, cursorCol);
 		
 		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {
