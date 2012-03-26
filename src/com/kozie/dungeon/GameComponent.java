@@ -235,7 +235,7 @@ public class GameComponent extends Canvas implements Runnable {
 		}
 		
 		// Render the custom cursor
-		int cursorCol = (mouseListener.isDrag) ? cursorDragColors : cursorColors;
+		int cursorCol = (mouseListener.isDrag()) ? cursorDragColors : cursorColors;
 		screen.render(cursor, mouseListener.mouseX, mouseListener.mouseY, cursorCol);
 		
 		// Draw screen info onto the buffered image

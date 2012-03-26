@@ -26,7 +26,8 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 	
 	public void mouseDragged(MouseEvent e) {
 		
-		isDrag = true;
+		// Drag only while the left button is pressed
+		isDrag = left;
 		
 		mouseX = e.getX() / GameComponent.SCALE;
 		mouseY = e.getY() / GameComponent.SCALE;
@@ -51,6 +52,11 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 				right = state;
 				break;
 		}
+	}
+	
+	public boolean isDrag() {
+		
+		return isDrag && left;
 	}
 	
 	public void release() {
