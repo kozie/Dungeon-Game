@@ -3,11 +3,16 @@ package com.kozie.dungeon;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.awt.image.MemoryImageSource;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +20,7 @@ import javax.swing.JPanel;
 import com.kozie.dungeon.gfx.Colors;
 import com.kozie.dungeon.gfx.Font;
 import com.kozie.dungeon.gfx.Screen;
+import com.kozie.dungeon.gfx.Sprite;
 import com.kozie.dungeon.gfx.SpriteSheet;
 
 public class GameComponent extends Canvas implements Runnable {
@@ -37,6 +43,10 @@ public class GameComponent extends Canvas implements Runnable {
 	public Screen screen;
 	public SpriteSheet spritesheet;
 	public Font font;
+	
+	private Sprite cursor;
+	private int cursorColors;
+	private int cursorDragColors;
 
 	public KeyboardListener keyListener;
 	public MouseListener mouseListener;
@@ -67,6 +77,17 @@ public class GameComponent extends Canvas implements Runnable {
 		screen = new Screen(WIDTH, HEIGHT, this);
 		spritesheet = new SpriteSheet(GameComponent.class.getResourceAsStream("/main.png"), 16);
 		font = new Font(spritesheet, screen);
+		
+		// Hide the cursor
+		int[] empty = new int[16 * 16];
+		Image cursorImg = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(16, 16, empty, 0 ,16));
+		Cursor emptyCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "cursor");
+		setCursor(emptyCursor);
+		
+		// Set custom cursor
+		cursor = new Sprite(spritesheet, 36 * 40);
+		cursorColors = Colors.get(-1, 444, 111, 555);
+		cursorDragColors = Colors.get(-1, 444, 500, 555);
 		
 		requestFocus();
 	}
@@ -106,7 +127,7 @@ public class GameComponent extends Canvas implements Runnable {
 
 		while (running) {
 
-			// Pause the game if not focussed
+			// Pause the game if not focused
 			if (!hasFocus()) {
 				keyListener.release();
 				mouseListener.release();
@@ -147,7 +168,7 @@ public class GameComponent extends Canvas implements Runnable {
 				shouldRender = true;
 			}
 
-			// Get or init the buffer strategy
+			// Get or initialize the buffer strategy
 			BufferStrategy bs = getBufferStrategy();
 			if (bs == null) {
 				createBufferStrategy(3);
@@ -196,34 +217,36 @@ public class GameComponent extends Canvas implements Runnable {
 
 	public void render(Graphics2D g) {
 
-		// Temp for benchmark
+		// Temporary for benchmark
 		screen.test(this);
-		font.draw("hello my name is koos", 30, 30, Colors.get(-1, 0, 0, 555));
+		
+		// Render some info / Statistics
+		int col = Colors.get(-1, -1, 111, 555);
+		font.draw("fps " + fps, 2, 2, col);
+		font.draw("x: " + mouseListener.mouseX + ", y: " + mouseListener.mouseY, 2, 10, col);
+		if (mouseListener.left && mouseListener.right) {
+			font.draw("left and right pressed", 2, 18, col);
+		} else if (mouseListener.left) {
+			font.draw("left pressed", 2, 18, col);
+		} else if (mouseListener.right) {
+			font.draw("right pressed", 2, 18, col);
+		} else {
+			font.draw("none pressed", 2, 18, col);
+		}
+		
+		// Render the custom cursor
+		int cursorCol = (mouseListener.isDrag) ? cursorDragColors : cursorColors;
+		screen.render(cursor, mouseListener.mouseX / SCALE, mouseListener.mouseY / SCALE, cursorCol);
 		
 		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
 
-		// Draw the graphics to end-user
+		// Draw the graphics to canvas
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-
-		// Render FPS on canvas
-		g.setColor(Color.YELLOW);
-		g.drawString("FPS " + fps, 10, 20);
-		g.drawString("X: " + mouseListener.mouseX + ", Y: " + mouseListener.mouseY, 10, 30);
-
-		if (mouseListener.left && mouseListener.right) {
-			g.drawString("Left and right pressed", 10, 40);
-		} else if (mouseListener.left) {
-			g.drawString("Left pressed", 10, 40);
-		} else if (mouseListener.right) {
-			g.drawString("Right pressed", 10, 40);
-		} else {
-			g.drawString("None pressed", 10, 40);
-		}
 	}
 
 	public GameComponent() {
@@ -231,8 +254,7 @@ public class GameComponent extends Canvas implements Runnable {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		setFont(new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 14));
-
+		
 		keyListener = new KeyboardListener(this);
 		mouseListener = new MouseListener(this);
 	}

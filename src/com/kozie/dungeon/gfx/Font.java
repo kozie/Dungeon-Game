@@ -1,7 +1,5 @@
 package com.kozie.dungeon.gfx;
 
-import java.awt.Dimension;
-
 public class Font {
 
 	private SpriteCollection chars;
@@ -10,7 +8,7 @@ public class Font {
 	private String[] charTable = {
 			"abcdefghijklmnopqrstuvwxyz",
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-			"1234567890!?,."};
+			"1234567890!?,.:"};
 
 	public Font(SpriteSheet sheet, Screen screen) {
 		
@@ -44,7 +42,7 @@ public class Font {
 			if (c == " " || chars.get(c) == null) continue;
 			
 			Sprite sprite = chars.get(c);
-			screen.render(sprite, x + i * sprite.width / 2, y, colors);
+			screen.render(sprite, x + i * sprite.width / 3, y, colors);
 		}
 	}
 }

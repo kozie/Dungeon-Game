@@ -7,17 +7,27 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
 	public boolean left = false;
 	public boolean right = false;
+	public boolean isDrag = false;
 	public int mouseX, mouseY;
-
+	
 	public MouseListener(GameComponent game) {
 
 		game.addMouseListener(this);
 		game.addMouseMotionListener(this);
 	}
 
-	@Override
 	public void mouseMoved(MouseEvent e) {
 
+		isDrag = false;
+		
+		mouseX = e.getX();
+		mouseY = e.getY();
+	}
+	
+	public void mouseDragged(MouseEvent e) {
+		
+		isDrag = true;
+		
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
@@ -50,10 +60,6 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
 	}
 
 	@Override

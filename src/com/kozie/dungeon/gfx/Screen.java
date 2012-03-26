@@ -39,7 +39,7 @@ public class Screen {
 
 	public void test(GameComponent game) {
 
-		// Temp for benchmarking
+		// Temporary for benchmarking
 		Random r = new Random();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0xFF << 24 | game.colors[r.nextInt(game.colors.length)];
