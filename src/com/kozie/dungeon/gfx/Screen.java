@@ -28,7 +28,13 @@ public class Screen {
 				int col = (colors >> (sprite.pixels[yy * sprite.width + xx] * 8)) & 0xFF;
 				if (col < 255) {
 					
-					int i = y * width + yy * width + x + xx;
+					int xp = x + xx;
+					int yp = y + yy;
+					
+					// Check if withing boundaries
+					if (xp < 0 || xp > width || yp < 0 || yp > height) continue;
+					
+					int i = xp + y * width + yy * width;
 					if (i > 0 && i < pixels.length) {
 						pixels[i] = 0xFF << 24 | game.colors[col];
 					}
