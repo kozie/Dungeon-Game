@@ -5,14 +5,12 @@ import java.util.Random;
 import com.kozie.dungeon.GameComponent;
 
 public class Screen {
-
 	public int width, height;
 	public int[] pixels;
 	
 	private GameComponent game;
 
 	public Screen(int width, int height, GameComponent game) {
-
 		this.width = width;
 		this.height = height;
 		this.game = game;
@@ -21,13 +19,10 @@ public class Screen {
 	}
 	
 	public void render(Sprite sprite, int x, int y, int colors) {
-		
 		for (int yy = 0; yy < sprite.height; yy++) {
 			for (int xx = 0; xx < sprite.width; xx++) {
-				
 				int col = (colors >> (sprite.pixels[yy * sprite.width + xx] * 8)) & 0xFF;
 				if (col < 255) {
-					
 					int xp = x + xx;
 					int yp = y + yy;
 					
@@ -44,7 +39,6 @@ public class Screen {
 	}
 
 	public void test(GameComponent game) {
-
 		// Temporary for benchmarking
 		Random r = new Random();
 		for (int i = 0; i < pixels.length; i++) {

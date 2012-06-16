@@ -22,6 +22,7 @@ import com.kozie.dungeon.gfx.Font;
 import com.kozie.dungeon.gfx.Screen;
 import com.kozie.dungeon.gfx.Sprite;
 import com.kozie.dungeon.gfx.SpriteSheet;
+import com.kozie.dungeon.world.World;
 
 public class GameComponent extends Canvas implements Runnable {
 
@@ -50,6 +51,8 @@ public class GameComponent extends Canvas implements Runnable {
 
 	public KeyboardListener keyListener;
 	public MouseListener mouseListener;
+	
+	public World world;
 
 	public void init() {
 
@@ -90,6 +93,9 @@ public class GameComponent extends Canvas implements Runnable {
 		cursorDragColors = Colors.get(-1, 444, 500, 555);
 		
 		requestFocus();
+		
+		// Initiate first level (world)
+		world = new World(1);
 	}
 
 	public void start() {
