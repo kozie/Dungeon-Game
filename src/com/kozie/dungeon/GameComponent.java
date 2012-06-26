@@ -53,8 +53,12 @@ public class GameComponent extends Canvas implements Runnable {
 	public MouseListener mouseListener;
 	
 	public World world;
+	public GameConfig config;
 
 	public void init() {
+		
+		config = new GameConfig();
+		//System.out.println(config.get("system.title"));
 
 		int i = 0;
 		for (int r = 0; r < 6; r++) {

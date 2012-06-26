@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <system>
+        <title>Dungeon</title>
+        <fps>60</fps>
+        <width>400</width>
+        <height>320</height>
+        <scale>2</scale>
+    </system>
+</config>
