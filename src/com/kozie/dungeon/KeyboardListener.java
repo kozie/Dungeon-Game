@@ -30,6 +30,7 @@ public class KeyboardListener implements KeyListener {
 	public Key eKey = new Key();
 	public Key shift = new Key();
 	public Key space = new Key();
+	public Key esc = new Key();
 
 	public KeyboardListener(GameComponent game) {
 		game.addKeyListener(this);
@@ -42,7 +43,7 @@ public class KeyboardListener implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		toggleKey(e, false);
+		toggleKey(e, true);
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -91,6 +92,10 @@ public class KeyboardListener implements KeyListener {
 	
 			case KeyEvent.VK_SPACE:
 				space.isPressed(state);
+				break;
+				
+			case KeyEvent.VK_ESCAPE:
+				esc.isPressed(state);
 				break;
 		}
 	}

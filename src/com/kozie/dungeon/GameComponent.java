@@ -148,6 +148,11 @@ public class GameComponent extends Canvas implements Runnable {
 
 				continue;*/
 			}
+			
+			// TODO Exit if esc is pressed
+			if (keyListener.esc.pressed) {
+				stop();
+			}
 
 			// Set ticks that are unprocessed
 			boolean shouldRender = false;
@@ -219,6 +224,9 @@ public class GameComponent extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
+		
+		// Close when done
+		System.exit(0);
 	}
 
 	public void tick() {
@@ -247,6 +255,9 @@ public class GameComponent extends Canvas implements Runnable {
 		// Render the custom cursor
 		int cursorCol = (mouseListener.isDrag()) ? cursorDragColors : cursorColors;
 		screen.render(cursor, mouseListener.mouseX, mouseListener.mouseY, cursorCol);
+		
+		Sprite duck = new Sprite(spritesheet, 0, 2, 2);
+		screen.render(duck, 40, 40);
 		
 		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {

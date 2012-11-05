@@ -22,9 +22,9 @@ public class SpriteSheet {
 			pixels = imgData.getRGB(0, 0, width, height, null, 0, width);
 
 			// Read out pixels and convert pixels into color locations
-			for (int i = 0; i < pixels.length; i++) {
+			/*for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = (pixels[i] & 0xFF) / 64;
-			}
+			}*/
 
 		} catch (IOException e) {
 			e.printStackTrace();

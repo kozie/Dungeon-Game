@@ -21,18 +21,37 @@ public class Screen {
 	public void render(Sprite sprite, int x, int y, int colors) {
 		for (int yy = 0; yy < sprite.height; yy++) {
 			for (int xx = 0; xx < sprite.width; xx++) {
-				int col = (colors >> (sprite.pixels[yy * sprite.width + xx] * 8)) & 0xFF;
+				int col = (colors >> (((sprite.pixels[yy * sprite.width + xx] & 0xFF) / 64) * 8)) & 0xFF;
 				if (col < 255) {
 					int xp = x + xx;
 					int yp = y + yy;
 					
-					// Check if withing boundaries
+					// Check if within boundaries
 					if (xp < 0 || xp > width || yp < 0 || yp > height) continue;
 					
 					int i = xp + y * width + yy * width;
 					if (i > 0 && i < pixels.length) {
 						pixels[i] = 0xFF << 24 | game.colors[col];
 					}
+				}
+			}
+		}
+	}
+	
+	public void render(Sprite sprite, int x, int y) {
+		for (int yy = 0; yy < sprite.height; yy++) {
+			for (int xx = 0; xx < sprite.width; xx++) {
+				int col = sprite.pixels[yy * sprite.width + xx];
+				
+				int xp = x + xx;
+				int yp = y + yy;
+				
+				// Check if within boundaries
+				if (xp < 0 || xp > width || yp < 0 || yp > height) continue;
+				
+				int i = xp + y * width + yy * width;
+				if (i > 0 && i < pixels.length) {
+					pixels[i] = 0xFF << 24 | col;
 				}
 			}
 		}
