@@ -240,8 +240,9 @@ public class GameComponent extends Canvas implements Runnable {
 		
 		// Render some info / Statistics
 		int col = Colors.get(-1, -1, 111, 555);
-		font.draw(fps + " fps", 2, 2, col);
-		font.draw("x: " + mouseListener.mouseX + ", y: " + mouseListener.mouseY, 2, 10, col);
+		font.draw(fps + "fps", 1, 1, col);
+		font.draw(deltaTime + "ms", 38, 1, col);
+		/*font.draw("x:" + mouseListener.mouseX + ", y:" + mouseListener.mouseY, 2, 10, col);
 		if (mouseListener.left && mouseListener.right) {
 			font.draw("left and right pressed", 2, 18, col);
 		} else if (mouseListener.left) {
@@ -250,14 +251,15 @@ public class GameComponent extends Canvas implements Runnable {
 			font.draw("right pressed", 2, 18, col);
 		} else {
 			font.draw("none pressed", 2, 18, col);
-		}
+		}*/
+		
+		// TODO Add duck for testing
+		Sprite duck = new Sprite(spritesheet, 0, 2, 2);
+		screen.render(duck, 40, 40);
 		
 		// Render the custom cursor
 		int cursorCol = (mouseListener.isDrag()) ? cursorDragColors : cursorColors;
 		screen.render(cursor, mouseListener.mouseX, mouseListener.mouseY, cursorCol);
-		
-		Sprite duck = new Sprite(spritesheet, 0, 2, 2);
-		screen.render(duck, 40, 40);
 		
 		// Draw screen info onto the buffered image
 		for (int i = 0; i < screen.pixels.length; i++) {

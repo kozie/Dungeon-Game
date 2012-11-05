@@ -5,8 +5,11 @@ import java.util.Random;
 import com.kozie.dungeon.GameComponent;
 
 public class Screen {
+	
 	public int width, height;
 	public int[] pixels;
+	
+	public int nullRgb = 0xFF00DC;
 	
 	private GameComponent game;
 
@@ -42,6 +45,9 @@ public class Screen {
 		for (int yy = 0; yy < sprite.height; yy++) {
 			for (int xx = 0; xx < sprite.width; xx++) {
 				int col = sprite.pixels[yy * sprite.width + xx];
+				
+				// Skip drawing if color is null RGB
+				if ((col & 0xFFFFFF) == nullRgb) continue;
 				
 				int xp = x + xx;
 				int yp = y + yy;

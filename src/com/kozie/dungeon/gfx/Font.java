@@ -42,7 +42,7 @@ public class Font {
 			if (c == " " || chars.get(c) == null) continue;
 			
 			Sprite sprite = chars.get(c);
-			screen.render(sprite, x + i * sprite.width / 3, y, colors);
+			screen.render(sprite, x + i * (sprite.width - 10), y, colors);
 		}
 	}
 }
