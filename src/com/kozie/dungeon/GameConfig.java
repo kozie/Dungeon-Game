@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -18,12 +19,10 @@ public class GameConfig {
 	private Map<String, String> config;
 	
 	public GameConfig() {
-		
 		init();
 	}
 	
 	public void init() {
-		
 		try {
 			InputStream xml = GameComponent.class.getResourceAsStream("/config.xml");
 			
@@ -34,6 +33,8 @@ public class GameConfig {
 			
 			config = Collections.synchronizedMap(new HashMap<String, String>());
 			readNodes(doc.getDocumentElement().getChildNodes());
+			
+			System.out.println(config.size());
 			
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -52,25 +53,34 @@ public class GameConfig {
 	}
 	
 	private void readNodes(NodeList list) {
-		
 		readNodes(list, "");
 	}
 	
 	private void readNodes(NodeList list, String path) {
+		path = path.trim();
 		
-		if (list.getLength() > 0) {
-		
-			for (int i = 0; i < list.getLength(); i++) {
+		for (int i = 0; i < list.getLength(); i++) {
+			
+			Node node = (Node) list.item(i);
+			
+			if (node.getNodeType() == Node.ELEMENT_NODE && node.hasChildNodes()) {
 				
-				Node node = list.item(i);
+				Element elem = (Element) node;
+				String nextPath = new String();
 				
-				if (node.hasChildNodes()) {
-					
-					readNodes(node.getChildNodes(), path + node.getNodeName() + ".");
-				} else {
-					
-					String val = node.getNodeValue();
-					config.put(path + node.getNodeName(), val);
+				if (path.length() > 0) {
+					nextPath = path + ".";
+				}
+				
+				nextPath = nextPath + elem.getTagName();
+				
+				readNodes(elem.getChildNodes(), nextPath);
+			} else {
+				
+				String val = node.getNodeValue().trim();
+				
+				if (!val.isEmpty()) {
+					config.put(path, val);
 				}
 			}
 		}

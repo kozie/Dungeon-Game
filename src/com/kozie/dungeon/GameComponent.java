@@ -56,10 +56,6 @@ public class GameComponent extends Canvas implements Runnable {
 	public GameConfig config;
 
 	public void init() {
-		
-		config = new GameConfig();
-		//System.out.println(config.get("system.title"));
-
 		int i = 0;
 		for (int r = 0; r < 6; r++) {
 			for (int g = 0; g < 6; g++) {
@@ -103,7 +99,6 @@ public class GameComponent extends Canvas implements Runnable {
 	}
 
 	public void start() {
-
 		running = true;
 
 		Thread thread = new Thread(this);
@@ -112,12 +107,10 @@ public class GameComponent extends Canvas implements Runnable {
 	}
 
 	public void stop() {
-
 		running = false;
 	}
 
 	public void run() {
-
 		// Keep track of some times
 		long lastRun = System.nanoTime();
 		long lastTimer = System.currentTimeMillis();
@@ -220,7 +213,7 @@ public class GameComponent extends Canvas implements Runnable {
 			if (System.currentTimeMillis() - lastTimer > 1000) {
 				lastTimer += 1000;
 				fps = frames;
-				System.out.println(fps + " " + deltaTime);
+				//System.out.println(fps + " " + deltaTime);
 				frames = 0;
 			}
 		}
@@ -273,7 +266,8 @@ public class GameComponent extends Canvas implements Runnable {
 	}
 
 	public GameComponent() {
-
+		config = new GameConfig();
+		
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
