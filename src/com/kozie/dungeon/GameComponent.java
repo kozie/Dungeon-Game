@@ -31,6 +31,8 @@ public class GameComponent extends Canvas implements Runnable {
 	public static final int HEIGHT = 320;
 	public static final int SCALE = 2;
 	public static final String TITLE = "Dungeon";
+	
+	protected static GameComponent instance;
 
 	public boolean running = true;
 	private double framerate = 60;
@@ -275,10 +277,18 @@ public class GameComponent extends Canvas implements Runnable {
 		keyListener = new KeyboardListener(this);
 		mouseListener = new MouseListener(this);
 	}
+	
+	public static GameComponent getInstance() {
+		if (instance == null) {
+			instance = new GameComponent();
+		}
+		
+		return instance;
+	}
 
 	public static void main(String[] args) {
 
-		GameComponent game = new GameComponent();
+		GameComponent game = getInstance();
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel(new BorderLayout());
 

@@ -34,8 +34,6 @@ public class GameConfig {
 			config = Collections.synchronizedMap(new HashMap<String, String>());
 			readNodes(doc.getDocumentElement().getChildNodes());
 			
-			System.out.println(config.size());
-			
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
